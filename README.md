@@ -1,13 +1,14 @@
 # mtcojo_postgwas
 
-A modular Python package for **multi-trait conditional GWAS analysis** using GCTA mtCOJO,
+An end-to-end **multi-trait conditional GWAS pipeline** built around GCTA mtCOJO,
 with optional **PostGWAS Docker harmonisation** and **LDSC genetic correlation** analysis.
 
-It automatically detects the variant ID format (`rsID` or `CHROM_POS_REF_ALT`) from your
-PLINK reference panel and LD score files — no manual configuration required. The pipeline
-validates format consistency, converts GWAS VCFs, runs GCTA, and writes a full timestamped
-log file plus a standalone HTML report with summary tables, plots, and conditional LDSC/PostGWAS
-sections when those options are enabled.
+The pipeline takes GWAS VCF inputs, validates the manifest and reference resources,
+converts each GWAS VCF into the GCTA mtCOJO `.ma` input format, runs GCTA mtCOJO,
+optionally runs PostGWAS harmonisation, optionally runs LDSC heritability/genetic
+correlation analysis, and writes a timestamped log plus a standalone HTML report
+covering inputs, conversion, mtCOJO results, PostGWAS outputs, LDSC outputs,
+summary tables, overlap plots, Manhattan/Q-Q plots, and conditional significance shifts.
 
 ---
 
@@ -58,6 +59,9 @@ Constructs a `.mtcojo.list` mapping each trait to its `.ma` file, then launches 
 Joins mtCOJO results with in-memory target coordinates, writes the 25-column PostGWAS
 manifest (`gwas2vcf_input2.tsv`), and launches the `jibinjv/postgwas:1.4` Docker container
 to produce harmonised GRCh37/GRCh38 VCF output.
+
+PostGWAS harmonisation uses the companion workflow:
+[JIBINJOHNV/postgwas](https://github.com/JIBINJOHNV/postgwas).
 
 > **Requires:** `--defaults /path/to/harmonisation.yaml` and `--resource-folder /path/to/gwas2vcf/`  
 > These are validated **before any analysis starts** — if missing, the pipeline exits immediately.
@@ -166,7 +170,7 @@ Resume behavior:
 
 ## Running the Bundled Test
 
-The package includes a self-contained test dataset (chr1:1Mb–2Mb subset):
+The repository includes a self-contained test dataset (chr1:1Mb–2Mb subset):
 
 ```bash
 conda activate mtcojo_postgwas
@@ -273,6 +277,13 @@ mtcojo-postgwas \
 
 > **ID format is auto-detected.** The pipeline reads the BIM and LD score files at startup
 > and automatically selects rsID or CHROM\_POS\_REF\_ALT mode — no flags required.
+
+> **Genome build and SNP ID consistency are mandatory.** All input files should use the
+> same genome build/version. GWAS VCF coordinates and alleles, PLINK `.bed/.bim/.fam`
+> reference files, LDSC LD score files, HapMap SNP lists, and PostGWAS resources should
+> all be from the same build, for example all GRCh37 or all GRCh38. The SNP ID pattern
+> must also match between the PLINK BIM and LDSC files: use rsIDs everywhere or
+> `CHROM_POS_REF_ALT`-style IDs everywhere; do not mix ID systems.
 
 ---
 
