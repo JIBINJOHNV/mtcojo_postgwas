@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mtcojo_postgwas"
+version = "1.0.0"
+description = "Unified GCTA mtCOJO & PostGWAS Harmonisation Pipeline Package"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "polars>=0.20.0"
+]
+
+[project.scripts]
+mtcojo-postgwas = "mtcojo_postgwas.cli:main"

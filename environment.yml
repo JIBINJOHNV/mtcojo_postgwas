@@ -1,0 +1,20 @@
+name: mtcojo_postgwas
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.8
+  - pip
+  - bcftools>=1.17
+  - git                    # needed to clone CBIIT/ldsc
+  - bitarray>=2            # required by ldsc
+  - scipy                  # required by ldsc
+  - numpy<2                  # required for compatibility with CBIIT/ldsc (raises TypeError with NumPy 2.x)
+  - pandas                 # required by ldsc
+  - matplotlib             # Python report plots and LDSC heatmaps
+  - r-data.table           # fast fread() loading for large GWAS plot tables
+  - pip:
+    - polars>=0.20.0
+    - matplotlib-venn      # Venn overlap diagrams in the HTML report
+    - ldsc                 # CBIIT/ldsc Python 3 fork (https://github.com/CBIIT/ldsc)
