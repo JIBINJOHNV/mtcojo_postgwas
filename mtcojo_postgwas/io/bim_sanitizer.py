@@ -21,7 +21,7 @@ import gzip
 import glob
 import polars as pl
 
-from .logger import get_logger, step_banner, log_pass, log_warn, log_info, abort
+from mtcojo_postgwas.core.logger import get_logger, step_banner, log_pass, log_warn, log_info, abort
 
 log = get_logger()
 _RSID_RE = re.compile(r"^rs\d+$")

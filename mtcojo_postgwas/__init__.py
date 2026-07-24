@@ -9,13 +9,13 @@ __version__ = "1.0.0"
 __author__ = "JJOHN41"
 
 _EXPORTS = {
-    "convert_vcf_single_pass": ("mtcojo_postgwas.vcf_converter", "convert_vcf_single_pass"),
-    "sanitize_bim": ("mtcojo_postgwas.bim_sanitizer", "sanitize_bim"),
-    "detect_bim_id_format": ("mtcojo_postgwas.bim_sanitizer", "detect_bim_id_format"),
-    "run_gcta_mtcojo": ("mtcojo_postgwas.gcta_runner", "run_gcta_mtcojo"),
-    "run_postgwas_harmonisation": ("mtcojo_postgwas.postgwas_runner", "run_postgwas_harmonisation"),
-    "run_ldsc_pipeline": ("mtcojo_postgwas.ldsc_runner", "run_ldsc_pipeline"),
-    "get_logger": ("mtcojo_postgwas.logger", "get_logger"),
+    "convert_vcf_single_pass": ("mtcojo_postgwas.io.vcf_converter", "convert_vcf_single_pass"),
+    "sanitize_bim": ("mtcojo_postgwas.io.bim_sanitizer", "sanitize_bim"),
+    "detect_bim_id_format": ("mtcojo_postgwas.io.bim_sanitizer", "detect_bim_id_format"),
+    "run_gcta_mtcojo": ("mtcojo_postgwas.stages.gcta", "run_gcta_mtcojo"),
+    "run_postgwas_harmonisation": ("mtcojo_postgwas.stages.postgwas", "run_postgwas_harmonisation"),
+    "run_ldsc_pipeline": ("mtcojo_postgwas.stages.ldsc", "run_ldsc_pipeline"),
+    "get_logger": ("mtcojo_postgwas.core.logger", "get_logger"),
 }
 
 __all__ = ["__version__", "__author__", *_EXPORTS]

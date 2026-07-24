@@ -8,7 +8,7 @@ for multi-trait conditional and joint analysis (mtCOJO).
 import subprocess
 from typing import Optional
 
-from .logger import get_logger, step_banner, log_pass, log_info, abort, log_cmd_script
+from mtcojo_postgwas.core.logger import get_logger, step_banner, log_pass, log_info, abort, log_cmd_script
 
 log = get_logger()
 

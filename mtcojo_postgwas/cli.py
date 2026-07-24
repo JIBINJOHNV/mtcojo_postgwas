@@ -25,7 +25,7 @@ import time
 import argparse
 import glob
 
-from .logger import (
+from .core.logger import (
     setup_logger, get_logger, print_logo,
     step_banner, log_pass, log_warn, log_info, abort, summary_table
 )
@@ -363,7 +363,7 @@ def main():
     if bfile:
         if args.no_bim_fix:
             log_warn(log, "--no-bim-fix: BIM sanitization skipped. Format detection still runs.")
-            from .bim_sanitizer import detect_bim_id_format, detect_ldscore_id_format
+            from .io.bim_sanitizer import detect_bim_id_format, detect_ldscore_id_format
             step_banner(log, "ID Format Detection (BIM + LD Scores)", step=2, total=6)
             bim_fmt = detect_bim_id_format(f"{bfile}.bim")
             ld_fmt  = detect_ldscore_id_format(args.ref_ld_chr) if args.ref_ld_chr else "unknown"
@@ -374,7 +374,7 @@ def main():
                       f"  Both must use the same format.")
             id_format = bim_fmt
         else:
-            from .bim_sanitizer import sanitize_bim
+            from .io.bim_sanitizer import sanitize_bim
 
             bfile, id_format = sanitize_bim(
                 bfile   = bfile,
@@ -418,7 +418,7 @@ def main():
             if len(df_coords) == 0:
                 log_warn(log, f"No coordinate cache found for {trait}; downstream PostGWAS may use merged report coordinates if available.")
         else:
-            from .vcf_converter import convert_vcf_single_pass
+            from .io.vcf_converter import convert_vcf_single_pass
 
             df_coords = convert_vcf_single_pass(
                 vcf_path    = vcf,
@@ -467,7 +467,7 @@ def main():
         step_banner(log, "GCTA mtCOJO Analysis  [RESUME: OUTPUT EXISTS]", step=5, total=n_steps)
         log_pass(log, f"Reusing existing non-empty mtCOJO output: {cma_file}")
     else:
-        from .gcta_runner import run_gcta_mtcojo
+        from .stages.gcta import run_gcta_mtcojo
 
         run_gcta_mtcojo(
             gcta64_bin   = args.gcta64,
@@ -500,7 +500,7 @@ def main():
                 target_coords = _load_target_coords_for_resume(ma_paths[traits[0]], merged_tsv)
             if target_coords is None or len(target_coords) == 0:
                 abort(log, "PostGWAS resume needs target SNP coordinates, but no .coords.tsv or merged_gwas_summary.tsv was found. Re-run without relying on skipped VCF conversion, or use --force.")
-            from .postgwas_runner import run_postgwas_harmonisation
+            from .stages.postgwas import run_postgwas_harmonisation
 
             run_postgwas_harmonisation(
                 cma_file        = cma_file,
@@ -559,7 +559,7 @@ def main():
             log_pass(log, f"Reusing existing LDSC rg results: {ldsc_results_csv}")
             log_pass(log, f"Reusing existing LDSC h2 results: {ldsc_h2_csv}")
         else:
-            from .ldsc_runner import run_ldsc_pipeline
+            from .stages.ldsc import run_ldsc_pipeline
 
             run_ldsc_pipeline(
                 trait_manifest   = trait_manifest_ldsc,
@@ -607,7 +607,7 @@ def main():
         report_html = planned_report
         log_pass(log, f"Reusing existing non-empty HTML report: {report_html}")
     else:
-        from .report_generator import build_pipeline_report
+        from .reporting.report_generator import build_pipeline_report
 
         report_html = build_pipeline_report(
             manifest_csv     = args.manifest,

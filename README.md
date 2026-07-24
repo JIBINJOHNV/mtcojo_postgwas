@@ -546,15 +546,25 @@ mtcojo_postgwas/
 │   └── ldsc_paths.txt      ← Script paths written by install.sh
 └── mtcojo_postgwas/
     ├── __init__.py
-    ├── logger.py           ← Colourful stdout + file logging, ASCII logo
     ├── cli.py              ← CLI entry point, arg parsing, stage orchestration
-    ├── bim_sanitizer.py    ← BIM format detection, LD score cross-check, 7→6-col fix
-    ├── vcf_converter.py    ← Single-pass bcftools extraction, overlap validation
-    ├── gcta_runner.py      ← GCTA subprocess wrapper
-    ├── postgwas_runner.py  ← PostGWAS manifest builder + Docker launcher
-    ├── ldsc_runner.py      ← LDSC munge + rg pipeline (CBIIT/ldsc, no Docker)
-    ├── report_generator.py ← Standalone HTML report, tables, and plot orchestration
-    ├── plot_gwas.R         ← Optional rMVP/CMplot plotting helper
+    ├── core/
+    │   └── logger.py       ← Colourful stdout + file logging, ASCII logo
+    ├── io/
+    │   ├── bim_sanitizer.py
+    │   │                   ← BIM ID detection, LD score cross-check, 7→6-col fix
+    │   └── vcf_converter.py
+    │                       ← Single-pass bcftools extraction, overlap validation
+    ├── stages/
+    │   ├── gcta.py         ← GCTA mtCOJO subprocess wrapper
+    │   ├── postgwas.py     ← PostGWAS manifest builder + Docker launcher
+    │   └── ldsc.py         ← LDSC munge + h²/rg pipeline (CBIIT/ldsc, no Docker)
+    ├── reporting/
+    │   ├── report_generator.py
+    │   │                   ← Standalone HTML report, tables, and plot orchestration
+    │   ├── conditional_shift_summary.py
+    │   │                   ← Gained/lost significance summaries after conditioning
+    │   └── assets/
+    │       └── plot_gwas.R ← Optional rMVP/CMplot plotting helper
     └── test_data/
         ├── scz_mini.vcf.gz
         ├── bip_mini.vcf.gz

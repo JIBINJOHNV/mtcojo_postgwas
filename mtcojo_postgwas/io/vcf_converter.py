@@ -26,7 +26,7 @@ import io
 import os
 import polars as pl
 
-from .logger import get_logger, step_banner, log_pass, log_warn, log_info, abort, log_cmd_script
+from mtcojo_postgwas.core.logger import get_logger, step_banner, log_pass, log_warn, log_info, abort, log_cmd_script
 
 log = get_logger()
 

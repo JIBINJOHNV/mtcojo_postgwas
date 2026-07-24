@@ -16,7 +16,7 @@ import re
 import tempfile
 import polars as pl
 
-from mtcojo_postgwas.logger import get_logger, log_info, log_pass, log_warn, log_fail, log_cmd_script, abort
+from mtcojo_postgwas.core.logger import get_logger, log_info, log_pass, log_warn, log_fail, log_cmd_script, abort
 log = get_logger()
 
 
@@ -385,8 +385,7 @@ def generate_multi_trait_plots(
             rscript_bin = shutil.which("Rscript")
 
         if rscript_bin and os.path.exists(merged_tsv):
-            pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            r_script = os.path.join(pkg_dir, "mtcojo_postgwas", "plot_gwas.R")
+            r_script = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "plot_gwas.R")
             
             cmd = [
                 rscript_bin, r_script,
@@ -1314,7 +1313,7 @@ def build_pipeline_report(
     conditional_shift_html = "<p><em>Conditional significance shift summary requires a merged GWAS summary table.</em></p>"
     if merged_tsv_path != "none":
         try:
-            from mtcojo_postgwas.conditional_shift_summary import build_conditional_shift_summary
+            from mtcojo_postgwas.reporting.conditional_shift_summary import build_conditional_shift_summary
 
             shift_outputs = build_conditional_shift_summary(
                 merged_tsv=merged_tsv_path,

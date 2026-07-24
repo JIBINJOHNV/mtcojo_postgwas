@@ -3,9 +3,10 @@ from setuptools import setup, find_packages
 setup(
     name="mtcojo_postgwas",
     version="1.0.0",
-    description="Unified GCTA mtCOJO & PostGWAS Harmonisation Pipeline Package",
+    description="End-to-end GCTA mtCOJO, PostGWAS harmonisation, and LDSC reporting pipeline",
     author="JJOHN41",
     packages=find_packages(),
+    package_data={"mtcojo_postgwas": ["reporting/assets/*.R"]},
     python_requires=">=3.8",
     install_requires=[
         "polars>=0.20.0",

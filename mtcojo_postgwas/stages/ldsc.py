@@ -23,7 +23,7 @@ import tempfile
 
 import polars as pl
 
-from .logger import get_logger, step_banner, log_pass, log_warn, log_info, abort, log_cmd_script
+from mtcojo_postgwas.core.logger import get_logger, step_banner, log_pass, log_warn, log_info, abort, log_cmd_script
 
 log = get_logger()
 
@@ -596,7 +596,7 @@ def make_gwas_visualizations(
         rscript_bin = shutil.which("Rscript")
         if rscript_bin:
             pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            r_script = os.path.join(pkg_dir, "mtcojo_postgwas", "plot_gwas.R")
+            r_script = os.path.join(pkg_dir, "reporting", "assets", "plot_gwas.R")
             
             trait_files = []
             trait_names = []
