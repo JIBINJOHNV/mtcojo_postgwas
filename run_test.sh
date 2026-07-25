@@ -82,3 +82,34 @@ echo "    scz_bip_test.mtcojo.list — Trait manifest list"
 echo "    scz_bip_test.mtcojo.cma  — Final conditional summary statistics"
 echo "============================================================"
 echo ""
+
+
+'''
+mtcojo-postgwas \
+  -m /Users/JJOHN41/Downloads/meta_analysis_testing/test_vcf/gwas_vcf_manifest.csv \
+  -d /Users/JJOHN41/Downloads/meta_analysis_testing/test_vcf/scz_bip_mtcojo \
+  -o scz_bip_mtcojo \
+  -b  /Users/JJOHN41/Documents/software_resources/resourses/postgwas/onekg_plinkfiles/GRCh37/EUR.chr1_22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes_multiallele_uniqid_SNP_Grch37_maf001 \
+  -l /Users/JJOHN41/Documents/software_resources/resourses/postgwas/1000GP_Phase3/eur_w_ld_chr/ \
+  --run-postgwas \
+  --defaults /Users/JJOHN41/Documents/developing_software/postgwas/tests/harmonisation.yaml \
+  --resource-folder /Users/JJOHN41/Documents/software_resources/resourses/postgwas/gwas2vcf/ \
+  --run-ldsc \
+  --ldsc-snp-list /Users/JJOHN41/Documents/software_resources/resourses/postgwas/1000GP_Phase3/eur_w_ld_chr/w_hm3.snplist \
+  --ldsc-n-parallel 4
+ 
+
+
+mtcojo-postgwas \
+  -m /Users/JJOHN41/Downloads/meta_analysis_testing/test_vcf/gwas_vcf_manifest_2.csv \
+  -d /Users/JJOHN41/Downloads/meta_analysis_testing/test_vcf/scz_bip_mtcojo2 \
+  -o scz_bip_mtcojo2 \
+  -b  /Users/JJOHN41/Documents/software_resources/resourses/postgwas/onekg_plinkfiles/GRCh37/EUR.chr1_22.phase3_shapeit2_mvncall_integrated_v5b.20130502.genotypes_multiallele_uniqid_SNP_Grch37_maf001 \
+  -l /Users/JJOHN41/Documents/software_resources/resourses/postgwas/1000GP_Phase3/eur_w_ld_chr/ \
+  --run-postgwas \
+  --defaults /Users/JJOHN41/Documents/developing_software/postgwas/tests/harmonisation.yaml \
+  --resource-folder /Users/JJOHN41/Documents/software_resources/resourses/postgwas/gwas2vcf/ \
+  --run-ldsc \
+  --ldsc-snp-list /Users/JJOHN41/Documents/software_resources/resourses/postgwas/1000GP_Phase3/eur_w_ld_chr/w_hm3.snplist \
+  --ldsc-n-parallel 4
+'''
